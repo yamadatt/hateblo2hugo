@@ -10,7 +10,7 @@ import (
 	"regexp"
 
 	"github.com/PuerkitoBio/goquery"
-	"github.com/catatsuy/movabletype"
+	"github.com/yamadatt/movabletype"
 	"github.com/pkg/errors"
 )
 

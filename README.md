@@ -26,7 +26,7 @@ Before use this tool, you must export blog data from hatenablog. Data format of 
 ### Usage
 
 ```bash
-$ hateblo2hugo migrate -i ~/your_path/your_hatenablog.export.txt -o ~/your_path/your_hugo_blog/blog/
+$ hateblo2hugo migrate -i ~/your_path/your_hatenablog.export.txt -o ~/your_path/your_hugo_blog/blog/ -u
 ```
 
 ### Migration Features

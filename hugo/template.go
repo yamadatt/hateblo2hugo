@@ -7,7 +7,7 @@ import (
 	"strings"
 	"text/template"
 
-	"github.com/catatsuy/movabletype"
+	"github.com/yamadatt/movabletype"
 )
 
 const pageTpl = `
@@ -16,7 +16,7 @@ date = "{{.Date}}"
 draft = {{.Draft}}
 title = "{{.Title}}"
 tags = [{{ StringsJoin .Tags "," }}]
-
+image = "{{ .Image }}"
 +++
 {{.Content}}
 `
@@ -26,6 +26,7 @@ type HugoPage struct {
 	Draft   bool
 	Title   string
 	Tags    []string
+	Image   string
 	Content string
 }
 
@@ -41,6 +42,7 @@ func CreateHugoPage(entry *movabletype.Entry) HugoPage {
 		Draft:   entry.Status != "Publish",
 		Title:   entry.Title,
 		Tags:    tags,
+		Image:   entry.Image,
 		Content: entry.Body,
 	}
 }
