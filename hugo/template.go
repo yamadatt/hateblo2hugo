@@ -6,6 +6,7 @@ import (
 	"fmt"
 	"strings"
 	"text/template"
+	"time"
 
 	"github.com/yamadatt/movabletype"
 )
@@ -16,7 +17,7 @@ date = "{{.Date}}"
 draft = {{.Draft}}
 title = "{{.Title}}"
 tags = [{{ StringsJoin .Tags "," }}]
-image = "{{ .Image }}"
+image = "{{.Image}}"
 +++
 {{.Content}}
 `
@@ -37,8 +38,13 @@ func CreateHugoPage(entry *movabletype.Entry) HugoPage {
 		tags[i] = fmt.Sprintf(`"%s"`, s)
 	}
 
+	du, _ := time.ParseDuration("-9h")
+	d := entry.Date.Add(du)
+	jst := time.FixedZone("Asia/Tokyo", 9*60*60)
+	dJST := d.In(jst)
+
 	return HugoPage{
-		Date:    entry.Date.String(),
+		Date:    dJST.Format(time.RFC822Z),
 		Draft:   entry.Status != "Publish",
 		Title:   entry.Title,
 		Tags:    tags,

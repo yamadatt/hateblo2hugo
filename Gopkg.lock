@@ -15,7 +15,7 @@
 
 [[projects]]
   branch = "master"
-  name = "github.com/catatsuy/movabletype"
+  name = "github.com/yamadatt/movabletype"
   packages = ["."]
   revision = "40a29f942e81be3cadd355e312fa9ac82140a039"
 

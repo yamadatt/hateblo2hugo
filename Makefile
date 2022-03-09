@@ -1,5 +1,5 @@
 APP=hateblo2hugo
-BASE_PACKAGE=github.com/stormcat24/$(APP)
+BASE_PACKAGE=github.com/yamadatt/$(APP)
 SERIAL_PACKAGES= \
 		 service
 TARGET_SERIAL_PACKAGES=$(addprefix test-,$(SERIAL_PACKAGES))
