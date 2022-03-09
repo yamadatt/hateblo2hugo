@@ -9,7 +9,7 @@ hateblo2hugo
 
 hateblo2hugo is a tool to migrate blog data of [hatenablog](http://hatenablog.com/) to markdown data for Hugo.
 
-![img](img/hateblo2hugo_01.png)
+
 
 ### Install
 
@@ -21,7 +21,6 @@ $ go get github.com/stormcat24/hateblo2hugo
 
 Before use this tool, you must export blog data from hatenablog. Data format of hatenablog is Movable Type.
 
-![img](img/hateblo2hugo_02.png)
 
 ### Usage
 

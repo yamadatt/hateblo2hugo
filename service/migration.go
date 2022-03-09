@@ -4,10 +4,10 @@ import (
 	"fmt"
 	"path/filepath"
 
-	"github.com/catatsuy/movabletype"
 	"github.com/pkg/errors"
-	"github.com/stormcat24/hateblo2hugo/helper"
-	"github.com/stormcat24/hateblo2hugo/hugo"
+	"github.com/yamadatt/hateblo2hugo/helper"
+	"github.com/yamadatt/hateblo2hugo/hugo"
+	"github.com/yamadatt/movabletype"
 )
 
 type Migration interface {

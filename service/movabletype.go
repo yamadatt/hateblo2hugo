@@ -1,9 +1,10 @@
 package service
 
 import (
-	"io/ioutil"
 	"bytes"
-	"github.com/catatsuy/movabletype"
+	"io/ioutil"
+
+	"github.com/yamadatt/movabletype"
 )
 
 type MovableType interface {

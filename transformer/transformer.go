@@ -4,8 +4,8 @@ import (
 	"reflect"
 
 	"github.com/PuerkitoBio/goquery"
-	"github.com/catatsuy/movabletype"
 	"github.com/pkg/errors"
+	"github.com/yamadatt/movabletype"
 )
 
 type Transformer interface {

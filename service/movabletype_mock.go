@@ -4,7 +4,7 @@
 package service
 
 import (
-	movabletype "github.com/catatsuy/movabletype"
+	movabletype "github.com/yamadatt/movabletype"
 	gomock "github.com/golang/mock/gomock"
 )
 

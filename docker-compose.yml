@@ -6,4 +6,5 @@ services:
       dockerfile: ./Dockerfile
     tty: true # コンテナの永続化
     volumes:
-      - ./:/go/src/app # マウントディレクトリ
+#      - ./:/go/src/app # マウントディレクトリ
+      - $PWD:/go/src/app # マウントディレクトリ

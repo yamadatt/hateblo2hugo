@@ -9,8 +9,8 @@ import (
 	"github.com/PuerkitoBio/goquery"
 	"github.com/pkg/errors"
 	"github.com/spf13/cobra"
-	"github.com/stormcat24/hateblo2hugo/service"
-	"github.com/stormcat24/hateblo2hugo/transformer"
+	"github.com/yamadatt/hateblo2hugo/service"
+	"github.com/yamadatt/hateblo2hugo/transformer"
 )
 
 var migrateCmd = &cobra.Command{
