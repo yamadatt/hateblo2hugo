@@ -44,7 +44,7 @@ func CreateHugoPage(entry *movabletype.Entry) HugoPage {
 	dJST := d.In(jst)
 
 	return HugoPage{
-		Date:    dJST.Format(time.RFC822Z),
+		Date:    dJST.Format(time.RFC3339),
 		Draft:   entry.Status != "Publish",
 		Title:   entry.Title,
 		Tags:    tags,
