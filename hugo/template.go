@@ -12,13 +12,14 @@ import (
 )
 
 const pageTpl = `
-+++
-date = "{{.Date}}"
-draft = {{.Draft}}
-title = "{{.Title}}"
-tags = [{{ StringsJoin .Tags "," }}]
-image = "{{.Image}}"
-+++
+---
+date: {{.Date}}
+draft: {{.Draft}}
+title: {{.Title}}
+slug: {{.Slug}}
+tags: [{{ StringsJoin .Tags "," }}]
+image: "{{.Image}}"
+---
 {{.Content}}
 `
 
@@ -26,6 +27,7 @@ type HugoPage struct {
 	Date    string
 	Draft   bool
 	Title   string
+	Slug    string
 	Tags    []string
 	Image   string
 	Content string
@@ -47,6 +49,7 @@ func CreateHugoPage(entry *movabletype.Entry) HugoPage {
 		Date:    dJST.Format(time.RFC3339),
 		Draft:   entry.Status != "Publish",
 		Title:   entry.Title,
+		Slug:    entry.Basename,
 		Tags:    tags,
 		Image:   entry.Image,
 		Content: entry.Body,

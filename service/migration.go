@@ -22,6 +22,7 @@ type MigrationImpl struct {
 }
 
 func NewMigration(entry *movabletype.Entry, outputDirRoot string) Migration {
+
 	return &MigrationImpl{
 		entry:           entry,
 		outputDirRoot:   outputDirRoot,
@@ -46,5 +47,7 @@ func (s *MigrationImpl) Execute() error {
 }
 
 func (s *MigrationImpl) OutputFilePath() string {
-	return fmt.Sprintf("%s.md", s.entry.Basename)
+	// return fmt.Sprintf("%s.md", s.entry.Basename)
+	return fmt.Sprintf("%s/index.md", s.entry.Basename)
+
 }
