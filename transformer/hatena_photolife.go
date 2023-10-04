@@ -10,8 +10,8 @@ import (
 	"regexp"
 
 	"github.com/PuerkitoBio/goquery"
-	"github.com/yamadatt/movabletype"
 	"github.com/pkg/errors"
+	"github.com/yamadatt/movabletype"
 )
 
 type HatenaPhotolifeTransformer struct {
@@ -48,8 +48,9 @@ func (t *HatenaPhotolifeTransformer) Transform() (e error) {
 			}
 		}
 
-		imgPath := filepath.Join("/images", t.entry.Basename, filepath.Base(src))
-		s.Parent().ReplaceWithHtml(fmt.Sprintf(`{{< figure src="%s" %s >}}`, imgPath, extAttr))
+		// imgPath := filepath.Join("/images", t.entry.Basename, filepath.Base(src))
+		// imgPath := filepath.Join(t.entry.Basename, filepath.Base(src))
+		s.Parent().ReplaceWithHtml(fmt.Sprintf(`{{< figure src="%s" %s >}}`, filepath.Base(src), extAttr))
 
 		s.Remove()
 	})
@@ -58,7 +59,18 @@ func (t *HatenaPhotolifeTransformer) Transform() (e error) {
 
 func (t *HatenaPhotolifeTransformer) saveImage(src string) error {
 
+	if t.entry.Basename == "" {
+		t.entry.Basename = t.entry.Title
+	}
+
+	//debug
+	fmt.Println(t.outputImageRoot)
+
 	outputImageDir := fmt.Sprintf("%s/%s", t.outputImageRoot, t.entry.Basename)
+
+	//debug
+	fmt.Println("outputImagedir = ", outputImageDir)
+
 	if err := os.MkdirAll(outputImageDir, 0777); err != nil {
 		return errors.Wrapf(err, "create directory is failed. [%s]", outputImageDir)
 	}

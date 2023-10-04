@@ -67,7 +67,8 @@ var migrateCmd = &cobra.Command{
 			return err
 		}
 
-		outputImageRoot := fmt.Sprintf("%s/static/images", outputTarget)
+		// outputImageRoot := fmt.Sprintf("%s/static/images", outputTarget)
+		outputImageRoot := fmt.Sprintf("%s/content/post/entry", outputTarget)
 
 		for _, entry := range entries {
 
