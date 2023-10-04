@@ -1,18 +1,21 @@
 #FROM golang:1.17.7-alpine3.15
-FROM golang:latest
+#FROM golang:latest
+FROM golang:1.21.1-alpine3.17
 
-# アップデートとgitのインストール！！
-#RUN apk add --update &&  apk add git
-RUN apt-get update && apt-get install git
 
-# appディレクトリの作成
-RUN mkdir /go/src/app
+WORKDIR /app
 
-# ワーキングディレクトリの設定
-WORKDIR /go/src/app
+#COPY go.mod ./
+#COPY go.sum ./
 
-# ホストのファイルをコンテナの作業ディレクトリに移行
-#ADD . /go/src/app
+#RUN go mod download
 
-#RUN go install github.com/akiradeveloper/hateblo2hugo@latest
-RUN go get -u github.com/yamadatt/hateblo2hugo
+COPY ./ ./
+
+RUN go mod download
+
+RUN go build -o /main
+
+
+#CMD ["/main"]
+ENTRYPOINT ["/main"]

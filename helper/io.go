@@ -1,6 +1,7 @@
 package helper
 
 import (
+	"fmt"
 	"io/ioutil"
 	"os"
 	"strings"
@@ -11,6 +12,8 @@ import (
 func WriteFileWithDirectory(path string, data []byte, perm os.FileMode) error {
 
 	s := strings.Split(path, "/")
+
+	fmt.Println(s)
 
 	var dir string
 	if len(s) > 1 {

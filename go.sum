@@ -45,8 +45,8 @@ github.com/spf13/viper v0.0.0-20170619124313-c1de95864d73 h1:qJXvCTq/ZNWp7kk3MGb
 github.com/spf13/viper v0.0.0-20170619124313-c1de95864d73/go.mod h1:A8kyI5cUJhb8N+3pkfONlcEcZbueH6nhAm0Fq7SrnBM=
 github.com/stretchr/testify v1.1.4 h1:ToftOQTytwshuOSj6bDSolVUa3GINfJP/fg3OkkOzQQ=
 github.com/stretchr/testify v1.1.4/go.mod h1:a8OnRcib4nhh0OaRAV+Yts87kKdq0PP7pXfy6kDkUVs=
-github.com/yamadatt/movabletype v0.0.4 h1:3cJdLDNAVAyxfOpw1fy9Uxz4eTBSDujlWUwjfsyrZ+c=
-github.com/yamadatt/movabletype v0.0.4/go.mod h1:SeNTcU7t/4HYG+ey4R2g1zX3uAnLUbKV2m2Kxl2xN6M=
+github.com/yamadatt/movabletype v0.0.5 h1:huxS4nAcwDqbxMjOQYT9UQJ8AbYIQ+6J/Er4bLQgksc=
+github.com/yamadatt/movabletype v0.0.5/go.mod h1:xcC3cCYOOHs/40FWdsAxDMXAihfEqj+MQIgZ1Z0NIhY=
 golang.org/x/net v0.0.0-20170621082244-057a25b06247 h1:9gMwEHNHYKG1f8Tu0pgbxfzVfkkdn1dW8pEYqn9mRBs=
 golang.org/x/net v0.0.0-20170621082244-057a25b06247/go.mod h1:mL1N/T3taQHkDXs73rZJwtUhF3w3ftmwwsq0BUmARs4=
 golang.org/x/sys v0.0.0-20170615053224-fb4cac33e319 h1:VOzr22cZ/j39L4pIzz1fEBJewkELEkgJuuLZHCdzFRg=

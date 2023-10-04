@@ -1,6 +1,10 @@
 hateblo2hugo
 =======
 
+docker build . -t goapp
+
+docker run -v ${PWD}:/app --name golang-app --rm -t goapp migrate -i yamadattt.hatenablog.jp.export.txt
+
 hateblo2hugo is a tool to migrate blog data of [hatenablog](http://hatenablog.com/) to markdown data for Hugo.
 
 ### Install

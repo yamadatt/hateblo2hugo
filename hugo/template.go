@@ -11,8 +11,7 @@ import (
 	"github.com/yamadatt/movabletype"
 )
 
-const pageTpl = `
----
+const pageTpl = `---
 date: {{.Date}}
 draft: {{.Draft}}
 title: {{.Title}}
@@ -44,6 +43,11 @@ func CreateHugoPage(entry *movabletype.Entry) HugoPage {
 	d := entry.Date.Add(du)
 	jst := time.FixedZone("Asia/Tokyo", 9*60*60)
 	dJST := d.In(jst)
+	fmt.Println(entry.Title)
+	fmt.Println(entry.Basename)
+	if entry.Basename == "" {
+		entry.Basename = entry.Title
+	}
 
 	return HugoPage{
 		Date:    dJST.Format(time.RFC3339),

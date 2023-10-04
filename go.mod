@@ -10,7 +10,7 @@ require (
 	github.com/spf13/cobra v0.0.0-20170621173259-31694f19adee
 	github.com/spf13/viper v0.0.0-20170619124313-c1de95864d73
 	github.com/stretchr/testify v1.1.4
-	github.com/yamadatt/movabletype v0.0.4
+	github.com/yamadatt/movabletype v0.0.5
 	golang.org/x/net v0.0.0-20170621082244-057a25b06247
 )
 

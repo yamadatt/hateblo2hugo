@@ -3,6 +3,7 @@ package service
 import (
 	"fmt"
 	"path/filepath"
+	"time"
 
 	"github.com/pkg/errors"
 	"github.com/yamadatt/hateblo2hugo/helper"
@@ -48,6 +49,17 @@ func (s *MigrationImpl) Execute() error {
 
 func (s *MigrationImpl) OutputFilePath() string {
 	// return fmt.Sprintf("%s.md", s.entry.Basename)
+
+	du, _ := time.ParseDuration("-9h")
+	d := s.entry.Date.Add(du)
+	jst := time.FixedZone("Asia/Tokyo", 9*60*60)
+	dJST := d.In(jst)
+
+	fmt.Println(dJST.Format("2006/01/02/150405"))
+	if s.entry.Basename == "" {
+		s.entry.Basename = fmt.Sprintf("%s/%s", dJST.Format("2006/01/02/150405"), s.entry.Title)
+	}
+
 	return fmt.Sprintf("%s/index.md", s.entry.Basename)
 
 }
