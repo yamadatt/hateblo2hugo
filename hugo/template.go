@@ -14,8 +14,8 @@ import (
 const pageTpl = `---
 date: {{.Date}}
 draft: {{.Draft}}
-title: {{.Title}}
-slug: {{.Slug}}
+title: "{{.Title}}"
+slug: "{{.Slug}}"
 tags: [{{ StringsJoin .Tags "," }}]
 image: "{{.Image}}"
 ---
@@ -48,6 +48,10 @@ func CreateHugoPage(entry *movabletype.Entry) HugoPage {
 	if entry.Basename == "" {
 		entry.Basename = entry.Title
 	}
+
+	// titleに特殊文字があるとyamlエラーになるため、全角に書き換える
+	entry.Title = strings.Replace(entry.Title, "\"", "”", -1)
+	entry.Title = strings.Replace(entry.Title, "\\", "￥", -1)
 
 	return HugoPage{
 		Date:    dJST.Format(time.RFC3339),

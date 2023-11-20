@@ -26,9 +26,14 @@ var (
 )
 
 func (t *HatenaPhotolifeTransformer) Transform() (e error) {
-	t.doc.Find("span[itemtype='http://schema.org/Photograph'] > img").Each(func(_ int, s *goquery.Selection) {
+	// t.doc.Find("span[itemtype='http://schema.org/Photograph'] > img").Each(func(_ int, s *goquery.Selection) {
+	t.doc.Find("img").Each(func(_ int, s *goquery.Selection) {
 		src, _ := s.Attr("src")
 		style, _ := s.Attr("style")
+
+		width, _ := s.Attr("width")
+		height, _ := s.Attr("height")
+		fmt.Println(width, height)
 
 		if t.updateImage {
 			if src != "" {
@@ -46,6 +51,10 @@ func (t *HatenaPhotolifeTransformer) Transform() (e error) {
 			if len(tokens) > 1 {
 				extAttr = fmt.Sprintf(`width="%spx"`, tokens[1])
 			}
+		}
+
+		if width != "" {
+			extAttr = fmt.Sprintf(`width="%spx" height="%spx"`, width, height)
 		}
 
 		// imgPath := filepath.Join("/images", t.entry.Basename, filepath.Base(src))

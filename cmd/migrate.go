@@ -73,10 +73,23 @@ var migrateCmd = &cobra.Command{
 		for _, entry := range entries {
 
 			sr := strings.NewReader(entry.Body)
+
+			//debug
+			// fmt.Println(sr)
+
 			doc, err := goquery.NewDocumentFromReader(sr)
 			if err != nil {
 				return err
 			}
+
+			//debug
+			// doc.Find("noscript").Remove()
+			// fmt.Println(doc.Html())
+
+			// doc.Find("body").Each(func(i int, s *goquery.Selection) {
+			// 	link := s.Find("a").Text()
+			// 	fmt.Println(link)
+			// })
 
 			tf := transformer.NewTransformer(doc, entry, outputImageRoot, updateImage)
 			if err := tf.Transform(); err != nil {
@@ -87,6 +100,7 @@ var migrateCmd = &cobra.Command{
 			if err != nil {
 				return err
 			}
+
 			newHTML = strings.Replace(newHTML, "{{&lt;", "{{<", -1)
 			newHTML = strings.Replace(newHTML, "&gt;}}", ">}}", -1)
 			newHTML = strings.Replace(newHTML, "&#34;", "\"", -1)
