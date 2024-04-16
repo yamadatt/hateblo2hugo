@@ -3,8 +3,10 @@ package service
 import (
 	"fmt"
 	"path/filepath"
+	"regexp"
 	"time"
 
+	"github.com/microcosm-cc/bluemonday"
 	"github.com/pkg/errors"
 	"github.com/yamadatt/hateblo2hugo/helper"
 	"github.com/yamadatt/hateblo2hugo/hugo"
@@ -55,11 +57,25 @@ func (s *MigrationImpl) OutputFilePath() string {
 	jst := time.FixedZone("Asia/Tokyo", 9*60*60)
 	dJST := d.In(jst)
 
+	p := bluemonday.StrictPolicy()
+	s.entry.Title = p.Sanitize(s.entry.Title)
+	s.entry.Basename = p.Sanitize(s.entry.Basename)
+
+	// fmt.Println("s.entry.Basename", s.entry.Basename)
+
+	//＜と＞のコードがタイトルに入っているので削除する
+	s.entry.Title = regexp.MustCompile(`&lt;.+/&gt;`).ReplaceAllString(s.entry.Title, "")
+	s.entry.Basename = regexp.MustCompile(`&lt;.+/&gt;`).ReplaceAllString(s.entry.Basename, "")
+
 	fmt.Println(dJST.Format("2006/01/02/150405"))
 	if s.entry.Basename == "" {
-		s.entry.Basename = fmt.Sprintf("%s/%s", dJST.Format("2006/01/02/150405"), s.entry.Title)
+		s.entry.Basename = s.entry.Title
 	}
 
+	fmt.Println("s.entry.Title", s.entry.Title)
+	fmt.Println("s.entry.Basename", s.entry.Basename)
+
+	s.entry.Basename = fmt.Sprintf("%s/%s", dJST.Format("2006/01/02/150405"), s.entry.Title)
 	return fmt.Sprintf("%s/index.md", s.entry.Basename)
 
 }

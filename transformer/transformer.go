@@ -32,15 +32,15 @@ func NewTransformer(doc *goquery.Document, entry *movabletype.Entry, outputImage
 	return &ChainTransformer{
 		transformers: []Transformer{
 			&HatenaKeywordTransformer{doc},
-			&TypefaceTransformer{doc},
-			&HeadingTransformer{doc},
-			&ParagraphTransformer{doc},
+			// &TypefaceTransformer{doc},
+			// &HeadingTransformer{doc},
+			// &ParagraphTransformer{doc},
 			&HatenaPhotolifeTransformer{doc, entry, outputImageRoot, updateImage},
-			&TweetTransformer{doc},
-			&SpeakerdeckTransformer{doc},
-			&EmbedLinkTransformer{doc},
-			&SyntaxTransformer{doc},
-			&BlockquoteTransformer{doc},
+			// &TweetTransformer{doc},
+			// &SpeakerdeckTransformer{doc},
+			// &EmbedLinkTransformer{doc},
+			// &SyntaxTransformer{doc},
+			// &BlockquoteTransformer{doc},
 		},
 	}
 }

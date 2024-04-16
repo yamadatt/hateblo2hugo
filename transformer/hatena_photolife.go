@@ -8,8 +8,10 @@ import (
 	"os"
 	"path/filepath"
 	"regexp"
+	"time"
 
 	"github.com/PuerkitoBio/goquery"
+	"github.com/microcosm-cc/bluemonday"
 	"github.com/pkg/errors"
 	"github.com/yamadatt/movabletype"
 )
@@ -33,7 +35,6 @@ func (t *HatenaPhotolifeTransformer) Transform() (e error) {
 
 		width, _ := s.Attr("width")
 		height, _ := s.Attr("height")
-		fmt.Println(width, height)
 
 		if t.updateImage {
 			if src != "" {
@@ -59,21 +60,63 @@ func (t *HatenaPhotolifeTransformer) Transform() (e error) {
 
 		// imgPath := filepath.Join("/images", t.entry.Basename, filepath.Base(src))
 		// imgPath := filepath.Join(t.entry.Basename, filepath.Base(src))
-		s.Parent().ReplaceWithHtml(fmt.Sprintf(`{{< figure src="%s" %s >}}`, filepath.Base(src), extAttr))
+		// s.Parent().ReplaceWithHtml(fmt.Sprintf(`{{< figure src="%s" %s >}}`, filepath.Base(src), extAttr))
+		s.ReplaceWithHtml(fmt.Sprintf(`{{< figure src="%s" %s >}}`, filepath.Base(src), extAttr))
 
 		s.Remove()
+	})
+
+	t.doc.Find("a").Each(func(_ int, s *goquery.Selection) {
+		href, _ := s.Attr("href")
+
+		re := regexp.MustCompile(`jpg|JPG|jpeg|gif|png`)
+
+		if t.updateImage && re.MatchString(href) {
+			if href != "" {
+				if err := t.saveImage(href); err != nil {
+					e = err
+					return
+				}
+				log.Printf("dowloaded %s is success", href)
+			}
+		}
+
+		// imgPath := filepath.Join("/images", t.entry.Basename, filepath.Base(src))
+		// imgPath := filepath.Join(t.entry.Basename, filepath.Base(src))
+		// s.Parent().ReplaceWithHtml(fmt.Sprintf(`{{< figure src="%s" %s >}}`, filepath.Base(src), extAttr))
+		// s.ReplaceWithHtml(fmt.Sprintf(`%s`, filepath.Base(href)))
+
+		// s.Remove()
+
+		s.SetAttr("href", filepath.Base(href))
+
+		// fmt.Println(t.doc)
 	})
 	return nil
 }
 
 func (t *HatenaPhotolifeTransformer) saveImage(src string) error {
 
+	p := bluemonday.StrictPolicy()
+	t.entry.Title = p.Sanitize(t.entry.Title)
+	t.entry.Basename = p.Sanitize(t.entry.Basename)
+
+	//＜と＞のコードがタイトルに入っているので削除する
+	t.entry.Title = regexp.MustCompile(`&lt;.+/&gt;`).ReplaceAllString(t.entry.Title, "")
+	t.entry.Basename = regexp.MustCompile(`&lt;.+/&gt;`).ReplaceAllString(t.entry.Basename, "")
+
 	if t.entry.Basename == "" {
 		t.entry.Basename = t.entry.Title
 	}
 
+	du, _ := time.ParseDuration("-9h")
+	d := t.entry.Date.Add(du)
+	jst := time.FixedZone("Asia/Tokyo", 9*60*60)
+	dJST := d.In(jst)
+
 	//debug
 	fmt.Println(t.outputImageRoot)
+	t.entry.Basename = fmt.Sprintf("%s/%s", dJST.Format("2006/01/02/150405"), t.entry.Title)
 
 	outputImageDir := fmt.Sprintf("%s/%s", t.outputImageRoot, t.entry.Basename)
 
