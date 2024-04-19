@@ -2,18 +2,18 @@ package transformer
 
 import (
 	"fmt"
+	"github.com/PuerkitoBio/goquery"
+	"github.com/microcosm-cc/bluemonday"
+	"github.com/pkg/errors"
+	"github.com/yamadatt/movabletype"
 	"io/ioutil"
 	"log"
 	"net/http"
 	"os"
 	"path/filepath"
 	"regexp"
+	"strings"
 	"time"
-
-	"github.com/PuerkitoBio/goquery"
-	"github.com/microcosm-cc/bluemonday"
-	"github.com/pkg/errors"
-	"github.com/yamadatt/movabletype"
 )
 
 type HatenaPhotolifeTransformer struct {
@@ -115,13 +115,22 @@ func (t *HatenaPhotolifeTransformer) saveImage(src string) error {
 	dJST := d.In(jst)
 
 	//debug
-	fmt.Println(t.outputImageRoot)
+	// fmt.Println(t.outputImageRoot)
 	t.entry.Basename = fmt.Sprintf("%s/%s", dJST.Format("2006/01/02/150405"), t.entry.Title)
+
+	s := strings.Split(t.entry.Basename, "/")
+
+	// fmt.Println("io.goのs", s)
+
+	if len(s) > 1 {
+		t.entry.Basename = strings.Join(s[0:len(s)-1], "/")
+
+	}
 
 	outputImageDir := fmt.Sprintf("%s/%s", t.outputImageRoot, t.entry.Basename)
 
 	//debug
-	fmt.Println("outputImagedir = ", outputImageDir)
+	// fmt.Println("outputImagedir = ", outputImageDir)
 
 	if err := os.MkdirAll(outputImageDir, 0777); err != nil {
 		return errors.Wrapf(err, "create directory is failed. [%s]", outputImageDir)

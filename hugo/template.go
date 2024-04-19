@@ -56,26 +56,29 @@ func CreateHugoPage(entry *movabletype.Entry) HugoPage {
 
 	p := bluemonday.StrictPolicy()
 	entry.Title = p.Sanitize(entry.Title)
+
 	entry.Basename = p.Sanitize(entry.Basename)
 
 	// titleに特殊文字があるとyamlエラーになるため、全角に書き換える
 	entry.Title = strings.Replace(entry.Title, "\"", "”", -1)
 	entry.Title = strings.Replace(entry.Title, "\\", "￥", -1)
+	// entry.Title = strings.Replace(entry.Title, "\'", "’", -1)
+	// entry.Title = strings.Replace(entry.Title, "#", "＃", -1)
 
 	// アイキャッチとして画像が入ってない場合は最初のjpgを入れる
 	if entry.Image == "" {
 		re := regexp.MustCompile(`figure src="(.*?)"`)
 		matches := re.FindAllStringSubmatch(entry.Body, -1)
-		for i, match := range matches {
-			fmt.Printf("Match %d: %s\n", i+1, match[1]) // match[1] にキャプチャグループのマッチ結果が格納される
+		for _, match := range matches {
+			// fmt.Printf("Match %d: %s\n", i+1, match[1]) // match[1] にキャプチャグループのマッチ結果が格納される
 			if strings.Contains(match[1], "jpg") == true {
 				entry.Image = match[1]
-				fmt.Println("アイキャッチに設定したファイル：", match[1])
+				// fmt.Println("アイキャッチに設定したファイル：", match[1])
 				break
 			}
 			if strings.Contains(match[1], "png") == true {
 				entry.Image = match[1]
-				fmt.Println("アイキャッチに設定したファイル：", match[1])
+				// fmt.Println("アイキャッチに設定したファイル：", match[1])
 				break
 			}
 		}
@@ -88,7 +91,18 @@ func CreateHugoPage(entry *movabletype.Entry) HugoPage {
 	}
 
 	//debug
-	fmt.Println("entry.Image:", entry.Image)
+	// fmt.Println("entry.Image:", entry.Image)
+
+	s := strings.Split(entry.Basename, "/")
+
+	// fmt.Println("io.goのs", s)
+
+	if len(s) > 1 {
+		entry.Basename = strings.Join(s[0:len(s)-1], "/")
+
+	}
+
+	fmt.Println(dJST.Format(time.RFC3339), entry.Title)
 
 	return HugoPage{
 		Date:    dJST.Format(time.RFC3339),

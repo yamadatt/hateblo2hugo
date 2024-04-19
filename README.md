@@ -15,6 +15,21 @@ docker run -v ${PWD}:/app --name golang-app --rm -t goapp migrate -i 7butk7ed2at
 cp  ~/git/hateblo2hugo/content/post/entry/* ~/git/hugobali/content/english/blog -r
 ```
 
+```bash
+
+rsync -av  ~/git/hateblo2hugo/content/post/entry/* ~/git/hugobali/content/english/blog
+
+```
+
+netlify cliの場合
+
+```bash
+
+sudo hugo -b "https://hugobali.netlify.app"
+
+netlify deploy --dir=public --site=5361fff5-bcef-4fbc-9e2f-0902b48ddb03 --prod
+```
+
 
 hateblo2hugo is a tool to migrate blog data of [hatenablog](http://hatenablog.com/) to markdown data for Hugo.
 

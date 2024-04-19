@@ -67,15 +67,16 @@ func (s *MigrationImpl) OutputFilePath() string {
 	s.entry.Title = regexp.MustCompile(`&lt;.+/&gt;`).ReplaceAllString(s.entry.Title, "")
 	s.entry.Basename = regexp.MustCompile(`&lt;.+/&gt;`).ReplaceAllString(s.entry.Basename, "")
 
-	fmt.Println(dJST.Format("2006/01/02/150405"))
+	// fmt.Println(dJST.Format("2006/01/02/150405"))
 	if s.entry.Basename == "" {
 		s.entry.Basename = s.entry.Title
 	}
 
-	fmt.Println("s.entry.Title", s.entry.Title)
-	fmt.Println("s.entry.Basename", s.entry.Basename)
+	// fmt.Println("s.entry.Title", s.entry.Title)
+	// fmt.Println("s.entry.Basename", s.entry.Basename)
 
-	s.entry.Basename = fmt.Sprintf("%s/%s", dJST.Format("2006/01/02/150405"), s.entry.Title)
+	s.entry.Basename = fmt.Sprintf("%s", dJST.Format("2006/01/02/150405"))
+	// fmt.Println(s.entry.Basename)
 	return fmt.Sprintf("%s/index.md", s.entry.Basename)
 
 }
