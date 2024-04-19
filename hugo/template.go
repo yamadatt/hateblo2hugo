@@ -65,12 +65,17 @@ func CreateHugoPage(entry *movabletype.Entry) HugoPage {
 	// アイキャッチとして画像が入ってない場合は最初のjpgを入れる
 	if entry.Image == "" {
 		re := regexp.MustCompile(`figure src="(.*?)"`)
-
 		matches := re.FindAllStringSubmatch(entry.Body, -1)
 		for i, match := range matches {
 			fmt.Printf("Match %d: %s\n", i+1, match[1]) // match[1] にキャプチャグループのマッチ結果が格納される
 			if strings.Contains(match[1], "jpg") == true {
 				entry.Image = match[1]
+				fmt.Println("アイキャッチに設定したファイル：", match[1])
+				break
+			}
+			if strings.Contains(match[1], "png") == true {
+				entry.Image = match[1]
+				fmt.Println("アイキャッチに設定したファイル：", match[1])
 				break
 			}
 		}
