@@ -15,11 +15,27 @@ docker run -v ${PWD}:/app --name golang-app --rm -t goapp migrate -i 7butk7ed2at
 cp  ~/git/hateblo2hugo/content/post/entry/* ~/git/hugobali/content/english/blog -r
 ```
 
+
+
 ```bash
 
 rsync -av  ~/git/hateblo2hugo/content/post/entry/* ~/git/hugobali/content/english/blog
 
 ```
+
+
+```bash
+
+rsync -ahvnr  ~/git/hateblo2hugo/content/post/entry/* ~/git/hugobali/content/english/blog --existing
+
+```
+
+
+* -a を指定することでなるべくコピー元のファイルと同一条件でコピーする。
+* -h でファイルサイズの視認性をよくする。
+* -v で詳細を出力する。
+* -n または --dry-run で対象ファイルを確認する。
+* --existing 更新分のみ(追加は無視される)
 
 netlify cliの場合
 

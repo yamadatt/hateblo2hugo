@@ -64,6 +64,7 @@ func (t *HatenaPhotolifeTransformer) Transform() (e error) {
 		s.ReplaceWithHtml(fmt.Sprintf(`{{< figure src="%s" %s >}}`, filepath.Base(src), extAttr))
 
 		s.Remove()
+
 	})
 
 	t.doc.Find("a").Each(func(_ int, s *goquery.Selection) {
@@ -88,9 +89,13 @@ func (t *HatenaPhotolifeTransformer) Transform() (e error) {
 
 		// s.Remove()
 
-		s.SetAttr("href", filepath.Base(href))
+		// s.SetAttr("href", filepath.Base(href))
 
 		// fmt.Println(t.doc)
+
+		if !strings.HasSuffix(href, ".html") && !strings.HasSuffix(href, ".HTML") {
+			s.SetAttr("href", filepath.Base(href))
+		}
 	})
 	return nil
 }
