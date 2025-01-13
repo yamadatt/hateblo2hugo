@@ -4,6 +4,7 @@ import (
 	"bufio"
 	"bytes"
 	"fmt"
+	// md "github.com/JohannesKaufmann/html-to-markdown"
 	"path/filepath"
 	"regexp"
 	"strings"
@@ -98,11 +99,17 @@ func CreateHugoPage(entry *movabletype.Entry) HugoPage {
 	// fmt.Println("io.goのs", s)
 
 	if len(s) > 1 {
-		entry.Basename = strings.Join(s[0:len(s)-1], "/")
+		entry.Basename = strings.Join(s[0:len(s)], "/")
 
 	}
 
 	fmt.Println(dJST.Format(time.RFC3339), entry.Title)
+
+	// 編集
+
+	entry.Body, entry.Basename = cleanEntryContent(entry.Body, entry.Basename)
+
+	fmt.Println(entry.Basename)
 
 	return HugoPage{
 		Date:    dJST.Format(time.RFC3339),
@@ -113,6 +120,16 @@ func CreateHugoPage(entry *movabletype.Entry) HugoPage {
 		Image:   entry.Image,
 		Content: entry.Body,
 	}
+}
+
+func cleanEntryContent(body, basename string) (string, string) {
+	body = strings.Replace(body, "<br/>", "<br/>\n", -1)
+	body = strings.Replace(body, `<div class="pickCreative_root" style="font-size:0"> </div>`, "", -1)
+	body = strings.Replace(body, `<p style="caret-color: rgb(0, 0, 0); color: rgb(0, 0, 0); -webkit-text-size-adjust: auto;"> </p>`, "", -1)
+	body = strings.Replace(body, `{{< figure src="."  >}}`, "", -1)
+	body = strings.Replace(body, `<div class="pickCreative_root" style="font-size:0">&nbsp;</div>`, "", -1)
+	basename = strings.ReplaceAll(basename, "/", "")
+	return body, basename
 }
 
 func (p *HugoPage) Render() ([]byte, error) {

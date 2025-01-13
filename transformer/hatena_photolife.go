@@ -93,7 +93,7 @@ func (t *HatenaPhotolifeTransformer) Transform() (e error) {
 
 		// fmt.Println(t.doc)
 
-		if !strings.HasSuffix(href, ".html") && !strings.HasSuffix(href, ".HTML") {
+		if !strings.HasSuffix(href, ".html") && !strings.Contains(href, "youtube") && !strings.Contains(href, "media-amazon") && !strings.Contains(href, "stat100") {
 			s.SetAttr("href", filepath.Base(href))
 		}
 	})
